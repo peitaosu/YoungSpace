@@ -20,5 +20,6 @@ from . import views
 urlpatterns = [
     url(r'^user', views.user),
     url(r'^event', views.event),
-    url(r'^manage', views.manage)
+    url(r'^manage', views.manage),
+    url(r'^$', views.index)
 ]

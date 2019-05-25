@@ -1,0 +1,20 @@
+<html>
+    {% include "head.html" %}
+    <body>
+        <div class="container">
+            {% include "header.html" %}
+
+            {% if in_maintenance == False %}
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 id="total">Total Torrents: {{ total }}</h4>
+                </div>
+            </div>
+            {% else %}
+                {% include "maintenance.html" %}
+            {% endif %}
+
+            {% include "footer.html" %}
+        </div>
+    </body>
+</html>
