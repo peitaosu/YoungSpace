@@ -15,11 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth import urls as auth_urls
 from . import views
 
 urlpatterns = [
     url(r'^user', views.user),
     url(r'^event', views.event),
     url(r'^manage', views.manage),
+    url(r'^admin', admin.site.urls),
     url(r'^$', views.index)
 ]
