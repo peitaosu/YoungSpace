@@ -30,7 +30,8 @@ def manage(request):
     pass
 
 def about(request):
-    pass
+    context = {}
+    return render(request, 'about.html', context)
 
 def index(request):
     context = {}
