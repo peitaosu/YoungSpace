@@ -31,6 +31,9 @@ def manage(request):
 
 def about(request):
     context = {}
+    context["events"] = [
+        ["Point", "Time", "Title", "This is context."]
+    ]
     return render(request, 'about.html', context)
 
 def index(request):
