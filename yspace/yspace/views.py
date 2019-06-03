@@ -9,7 +9,17 @@ import sqlite3
 from sqlite3 import OperationalError
 
 def event(request):
-    context = {}
+    context = {
+        "registered": [],
+        "all": []
+    }
+    temp_resgitered = {
+        "ID": 0,
+        "Title": "Event Title",
+        "Description": "Event Description",
+        "Picture": "Event_Picture"
+    }
+    context["registered"].append(temp_resgitered)
     return render(request, 'event.html', context)
 
 def join(request):
