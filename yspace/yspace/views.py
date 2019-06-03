@@ -8,7 +8,7 @@ import json
 import sqlite3
 from sqlite3 import OperationalError
 
-def event(request):
+def event(request, action):
     context = {
         "registered": [],
         "all": []
@@ -20,21 +20,12 @@ def event(request):
         "Picture": "Event_Picture"
     }
     context["registered"].append(temp_resgitered)
-    return render(request, 'event.html', context)
-
-def join(request):
-    pass
+    if action == "detail":
+        return render(request, 'detail.html', context)
+    else:
+        return render(request, 'index.html', context)
 
 def user(request):
-    pass
-
-def register(request):
-    pass
-
-def login(request):
-    pass
-
-def logout(request):
     pass
 
 def manage(request):
