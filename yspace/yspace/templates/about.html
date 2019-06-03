@@ -1,32 +1,25 @@
-<html>
-    {% include "head.html" %}
-    <body>
-        <div class="container">
-            {% include "navbar.html" %}
+{% extends 'index.html' %}
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="timeline">
-                        {% for event in events %}
-                        <dl>
-                            <dt>{{ event.0 }}</dt>
-                            <dd class="pos-right clearfix">
-                                <div class="circ"></div>
-                                <div class="time">{{ event.1 }}</div>
-                                <div class="events">
-                                    <div class="events-body">
-                                        <h4 class="events-heading">{{ event.2 }}</h4>
-                                        <p>{{ event.3 }}</p>
-                                    </div>
-                                </div>
-                            </dd>
-                        </dl>
-                        {% endfor %}
-                    </div>
-                </div>
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="timeline">
+                {% for event in events %}
+                <dl>
+                    <dt>{{ event.0 }}</dt>
+                    <dd class="pos-right clearfix">
+                        <div class="circ"></div>
+                        <div class="time">{{ event.1 }}</div>
+                        <div class="events">
+                            <div class="events-body">
+                                <h4 class="events-heading">{{ event.2 }}</h4>
+                                <p>{{ event.3 }}</p>
+                            </div>
+                        </div>
+                    </dd>
+                </dl>
+                {% endfor %}
             </div>
-
-            {% include "footer.html" %}
         </div>
-    </body>
-</html>
+    </div>
+{% endblock %}
