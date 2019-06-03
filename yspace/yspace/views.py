@@ -9,7 +9,8 @@ import sqlite3
 from sqlite3 import OperationalError
 
 def event(request):
-    pass
+    context = {}
+    return render(request, 'event.html', context)
 
 def join(request):
     pass
