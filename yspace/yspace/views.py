@@ -25,7 +25,7 @@ def event(request, action):
     else:
         return render(request, 'index.html', context)
 
-def user(request):
+def user(request, action):
     pass
 
 def manage(request):
