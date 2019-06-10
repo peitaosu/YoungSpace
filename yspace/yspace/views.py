@@ -26,14 +26,14 @@ def event(request, action):
         return render(request, 'index.html', context)
 
 def user(request, action):
+    context = {}
     if action == "register":
         pass
     elif action == "login":
         pass
     elif action == "logout":
         pass
-    else:
-        pass
+    return render(request, 'index.html', context)
 
 def manage(request):
     pass
