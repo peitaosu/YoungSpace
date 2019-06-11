@@ -6,7 +6,14 @@ import sys
 import subprocess
 import json
 import sqlite3
+import hashlib
 from sqlite3 import OperationalError
+from . import models
+
+def hash_code(source):
+    hash = hashlib.sha256()
+    hash.update(source.encode())
+    return hash.hexdigest()
 
 def event(request, action):
     context = {
@@ -28,7 +35,10 @@ def event(request, action):
 def user(request, action):
     context = {}
     if action == "register":
-        pass
+        new_user = models.User()
+        new_user.email = request.POST["email"]
+        new_user.password = hash_code(request.POST["password"])
+        new_user.save()
     elif action == "login":
         pass
     elif action == "logout":
