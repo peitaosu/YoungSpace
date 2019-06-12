@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.conf import settings
+from django.shortcuts import redirect
 import os
 import sys
 import subprocess
@@ -40,10 +41,14 @@ def user(request, action):
         new_user.password = hash_code(request.POST["password"])
         new_user.save()
     elif action == "login":
-        pass
+        user = models.User.objects.get(email=request.POST["email"])
+        if user.password == hash_code(request.POST["password"]):
+            request.session["email"] = user.email
+            request.session["password"] = user.password
+            request.session["user_login"] = True
     elif action == "logout":
-        pass
-    return render(request, 'index.html', context)
+        request.session.flush()
+    return redirect("/")
 
 def manage(request):
     pass
@@ -57,4 +62,6 @@ def about(request):
 
 def index(request):
     context = {}
+    if "user_login" in request.session and request.session["user_login"]:
+        context["user_login"] = request.session["email"]
     return render(request, 'index.html', context)

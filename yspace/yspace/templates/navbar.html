@@ -35,8 +35,12 @@
                     <a href="/about"><i class="glyphicon glyphicon-copyright-mark"></i>&nbsp;&nbsp;About</a>
                 </li>
             </ul>
+            {% if user_login %}
+            <button type="button" class="navbar-right btn btn-danger navbar-btn" onclick="location.href='/user/logout'"><i class="glyphicon glyphicon-log-out"></i>&nbsp;&nbsp;{{user_login}}</button>
+            {% else %}
             <button type="button" class="navbar-right btn btn-danger navbar-btn" data-toggle="modal"
                 data-target="#login-modal"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Login</button>
+            {% endif %}
         </div>
     </div>
     {% include "login.html" %}
