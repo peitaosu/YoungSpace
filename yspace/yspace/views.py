@@ -21,17 +21,16 @@ def event(request, action):
         "registered": [],
         "all": []
     }
-    temp_resgitered = {
-        "ID": 0,
-        "Title": "Event Title",
-        "Description": "Event Description",
-        "Picture": "Event_Picture"
-    }
-    context["registered"].append(temp_resgitered)
+    new_event = models.Event()
+    new_event.eid = 0
+    new_event.title = "Event Title"
+    new_event.description = "Event Description"
+    new_event.picture = "Event_Picture"
+    context["registered"].append(new_event)
     if action == "detail":
         return render(request, 'detail.html', context)
     else:
-        return render(request, 'index.html', context)
+        return render(request, 'event.html', context)
 
 def user(request, action):
     context = {}

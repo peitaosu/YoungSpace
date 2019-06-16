@@ -7,11 +7,11 @@
 		{% for event in registered %}
 		<div class="col-sm-6 col-md-3">
 			<div class="thumbnail">
-				<img class="img-rounded" src="{{ event.Picture }}.jpg">
+				<img class="img-rounded" src="{{ event.picture }}.jpg">
 				<div class="caption text-center">
-					<h3>{{ event.Title }}</h3>
-					<p>{{ event.Description }}</p>
-					<p><a href="/detail/ID={{ event.ID }}" class="btn btn-success" role="button">Detail</a> <a href="/cancel/ID={{ event.ID }}" class="btn btn-danger" role="button">Cancel</a></p>
+					<h3>{{ event.title }}</h3>
+					<p>{{ event.description }}</p>
+					<p><a href="/detail/ID={{ event.eid }}" class="btn btn-success" role="button">Detail</a> <a href="/cancel/ID={{ event.eid }}" class="btn btn-danger" role="button">Cancel</a></p>
 				</div>
 			</div>
 		</div>
@@ -22,11 +22,11 @@
 		{% for event in all %}
 		<div class="col-sm-6 col-md-3">
 			<div class="thumbnail">
-				<img class="img-rounded" src="{{ event.Picture }}.jpg">
+				<img class="img-rounded" src="{{ event.picture }}.jpg">
 				<div class="caption text-center">
-					<h3>{{ event.Title }}</h3>
-					<p>{{ event.Description }}</p>
-					<p><a href="ID={{ event.ID }}" class="btn btn-warning" role="button">Register</a></p>
+					<h3>{{ event.title }}</h3>
+					<p>{{ event.description }}</p>
+					<p><a href="ID={{ event.eid }}" class="btn btn-warning" role="button">Register</a></p>
 				</div>
 			</div>
 		</div>
