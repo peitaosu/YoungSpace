@@ -17,3 +17,11 @@ class Event(models.Model):
     def __str__(self):
         return self.title
 
+class About(models.Model):
+    point = models.CharField(max_length=40)
+    time = models.CharField(max_length=40)
+    title = models.CharField(max_length=40)
+    context = models.CharField(max_length=256)
+
+    def __str__(self):
+        return self.title

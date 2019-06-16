@@ -21,6 +21,7 @@ def event(request, action):
         "registered": [],
         "all": []
     }
+    context["all"] = models.Event.objects.all()
     new_event = models.Event()
     new_event.eid = 0
     new_event.title = "Event Title"
@@ -54,9 +55,7 @@ def manage(request):
 
 def about(request):
     context = {}
-    context["events"] = [
-        ["Point", "Time", "Title", "This is context."]
-    ]
+    context["events"] = models.About.objects.all()
     return render(request, 'about.html', context)
 
 def index(request):
