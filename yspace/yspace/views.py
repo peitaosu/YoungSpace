@@ -33,7 +33,7 @@ def event(request, action):
         new_registration = models.User_Event(user=current_user, event=event)
         new_registration.save()
     elif action == "add":
-        new_event = models.Event(eid=request.POST["eid"], title=request.POST["title"], description=request.POST["description"], picture=request.POST["picture"])
+        new_event = models.Event(eid=(models.Event.objects.all().last().eid + 1), title=request.POST["title"], description=request.POST["description"], picture=request.POST["picture"])
         new_event.save()
     else:
         pass
@@ -44,9 +44,7 @@ def event(request, action):
 def user(request, action):
     context = {}
     if action == "register":
-        new_user = models.User()
-        new_user.email = request.POST["email"]
-        new_user.password = hash_code(request.POST["password"])
+        new_user = models.User(email=request.POST["email"], password=hash_code(request.POST["password"])
         new_user.save()
     elif action == "login":
         user = models.User.objects.get(email=request.POST["email"])
