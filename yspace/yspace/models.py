@@ -18,8 +18,8 @@ class Event(models.Model):
         return self.title
 
 class User_Event(models.Model):
-    user = models.ForeignKey(User)
-    event = models.ForeignKey(Event)
+    user = models.ForeignKey("User", on_delete=User)
+    event = models.ForeignKey("Event", on_delete=Event)
 
     def __str__(self):
         return "User: {} Event: {}".format(user, event)
