@@ -44,7 +44,7 @@ def event(request, action):
 def user(request, action):
     context = {}
     if action == "register":
-        new_user = models.User(email=request.POST["email"], password=hash_code(request.POST["password"])
+        new_user = models.User(email=request.POST["email"], password=hash_code(request.POST["password"]))
         new_user.save()
     elif action == "login":
         user = models.User.objects.get(email=request.POST["email"])
