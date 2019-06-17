@@ -19,22 +19,27 @@ def hash_code(source):
 def event(request, action):
     context = {
         "registered": [],
-        "all": []
+        "all": [],
+        "detail": None
     }
-    context["all"] = models.Event.objects.all()
     current_user = models.User.objects.get(email=request.session["email"])
     registered_event = models.User_Event.objects.get(user=current_user)
-    context["registered"] = registered_event
     if action == "detail":
+        event = models.Event.objects.get(eid=request.GET["eid"])
+        context["detail"] = event
         return render(request, 'detail.html', context)
     elif action == "register":
         event = models.Event.objects.get(eid=request.GET["eid"])
         new_registration = models.User_Event(user=current_user, event=event)
         new_registration.save()
-        registered_event = models.User_Event.objects.get(user=current_user)
-        return render(request, 'event.html', context)
+    elif action == "add":
+        new_event = models.Event(eid=request.POST["eid"], title=request.POST["title"], description=request.POST["description"], picture=request.POST["picture"])
+        new_event.save()
     else:
-        return render(request, 'event.html', context)
+        pass
+    context["all"] = models.Event.objects.all()
+    context["registered"] = models.User_Event.objects.get(user=current_user)
+    return render(request, 'event.html', context)
 
 def user(request, action):
     context = {}
