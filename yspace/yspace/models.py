@@ -17,6 +17,13 @@ class Event(models.Model):
     def __str__(self):
         return self.title
 
+class User_Event(models.Model):
+    user = models.ForeignKey(User)
+    event = models.ForeignKey(Event)
+
+    def __str__(self):
+        return "User: {} Event: {}".format(user, event)
+
 class About(models.Model):
     point = models.CharField(max_length=40)
     time = models.CharField(max_length=40)

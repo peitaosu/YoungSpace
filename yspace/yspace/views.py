@@ -22,14 +22,17 @@ def event(request, action):
         "all": []
     }
     context["all"] = models.Event.objects.all()
-    new_event = models.Event()
-    new_event.eid = 0
-    new_event.title = "Event Title"
-    new_event.description = "Event Description"
-    new_event.picture = "Event_Picture"
-    context["registered"].append(new_event)
+    current_user = models.User.objects.get(email=request.session["email"])
+    registered_event = models.User_Event.objects.get(user=current_user)
+    context["registered"] = registered_event
     if action == "detail":
         return render(request, 'detail.html', context)
+    elif action == "register":
+        event = models.Event.objects.get(eid=request.GET["eid"])
+        new_registration = models.User_Event(user=current_user, event=event)
+        new_registration.save()
+        registered_event = models.User_Event.objects.get(user=current_user)
+        return render(request, 'event.html', context)
     else:
         return render(request, 'event.html', context)
 
