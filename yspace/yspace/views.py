@@ -16,14 +16,22 @@ def hash_code(source):
     hash.update(source.encode())
     return hash.hexdigest()
 
+def redirect_if_not_login(request):
+    if "email" not in request.session:
+        return redirect("/")
+
+def redirect_if_not_staff(request):
+    current_user = models.User.objects.get(email=request.session["email"])
+    if not current_user.is_staff:
+        return redirect("/")
+
 def event(request, action):
     context = {
         "registered": [],
         "all": [],
         "detail": None
     }
-    if "email" not in request.session:
-        return redirect("/")
+    redirect_if_not_login(request)
     current_user = models.User.objects.get(email=request.session["email"])
     registered_event = models.User_Event.objects.get(user=current_user)
     if action == "/detail":
@@ -34,7 +42,12 @@ def event(request, action):
         event = models.Event.objects.get(eid=request.GET["eid"])
         new_registration = models.User_Event(user=current_user, event=event)
         new_registration.save()
+    elif action == "/cancel":
+        event = models.Event.objects.get(eid=request.GET["eid"])
+        user_event = models.User_Event.objects.get(event=event)
+        user_event.delete()
     elif action == "/add":
+        redirect_if_not_staff(request)
         new_event = models.Event(eid=(models.Event.objects.all().last().eid + 1), title=request.POST["title"], description=request.POST["description"], picture=request.POST["picture"])
         new_event.save()
     else:
@@ -45,8 +58,7 @@ def event(request, action):
 
 def user(request, action):
     context = {}
-    if "email" not in request.session:
-        return redirect("/")
+    redirect_if_not_login(request)
     if action == "/register":
         new_user = models.User(email=request.POST["email"], password=hash_code(request.POST["password"]))
         new_user.save()
@@ -63,11 +75,9 @@ def user(request, action):
 
 def manage(request):
     context = {}
-    if "email" not in request.session:
-        return redirect("/")
+    redirect_if_not_login(request)
     current_user = models.User.objects.get(email=request.session["email"])
-    if not current_user.is_staff:
-        return redirect("/")
+    redirect_if_not_staff(request)
     return render(request, 'manage.html', context)
 
 def about(request):
