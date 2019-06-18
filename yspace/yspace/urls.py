@@ -19,9 +19,10 @@ from django.contrib.auth import urls as auth_urls
 from . import views
 
 urlpatterns = [
-    url(r'^user/(?P<action>[a-z]*)', views.user),
-    url(r'^event/(?P<action>[a-z]*)', views.event),
-    url(r'^manage', admin.site.urls),
+    url(r'^user(?P<action>/[a-z]*)', views.user),
+    url(r'^event(?P<action>/[a-z]*)', views.event),
+    url(r'^admin', admin.site.urls),
+    url(r'^manage', views.manage),
     url(r'^about', views.about),
     url(r'^$', views.index)
 ]

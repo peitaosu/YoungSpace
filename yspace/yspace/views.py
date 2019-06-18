@@ -22,17 +22,19 @@ def event(request, action):
         "all": [],
         "detail": None
     }
+    if "email" not in request.session:
+        return redirect("/")
     current_user = models.User.objects.get(email=request.session["email"])
     registered_event = models.User_Event.objects.get(user=current_user)
-    if action == "detail":
+    if action == "/detail":
         event = models.Event.objects.get(eid=request.GET["eid"])
         context["detail"] = event
         return render(request, 'detail.html', context)
-    elif action == "register":
+    elif action == "/register":
         event = models.Event.objects.get(eid=request.GET["eid"])
         new_registration = models.User_Event(user=current_user, event=event)
         new_registration.save()
-    elif action == "add":
+    elif action == "/add":
         new_event = models.Event(eid=(models.Event.objects.all().last().eid + 1), title=request.POST["title"], description=request.POST["description"], picture=request.POST["picture"])
         new_event.save()
     else:
@@ -43,21 +45,24 @@ def event(request, action):
 
 def user(request, action):
     context = {}
-    if action == "register":
+    if action == "/register":
         new_user = models.User(email=request.POST["email"], password=hash_code(request.POST["password"]))
         new_user.save()
-    elif action == "login":
+    elif action == "/login":
         user = models.User.objects.get(email=request.POST["email"])
         if user.password == hash_code(request.POST["password"]):
             request.session["email"] = user.email
             request.session["password"] = user.password
             request.session["user_login"] = True
-    elif action == "logout":
+    elif action == "/logout":
         request.session.flush()
+    else:
+        pass
     return redirect("/")
 
 def manage(request):
-    pass
+    context = {}
+    return render(request, 'manage.html', context)
 
 def about(request):
     context = {}
