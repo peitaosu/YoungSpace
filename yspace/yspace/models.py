@@ -19,6 +19,7 @@ class User(models.Model):
     biography = models.CharField(max_length=256)
     picture = models.CharField(max_length=256)
     register_date = models.DateField(auto_now_add=True)
+    is_staff = models.BooleanField(default=False)
 
     def __str__(self):
         return self.email

@@ -45,6 +45,8 @@ def event(request, action):
 
 def user(request, action):
     context = {}
+    if "email" not in request.session:
+        return redirect("/")
     if action == "/register":
         new_user = models.User(email=request.POST["email"], password=hash_code(request.POST["password"]))
         new_user.save()
@@ -52,7 +54,6 @@ def user(request, action):
         user = models.User.objects.get(email=request.POST["email"])
         if user.password == hash_code(request.POST["password"]):
             request.session["email"] = user.email
-            request.session["password"] = user.password
             request.session["user_login"] = True
     elif action == "/logout":
         request.session.flush()
@@ -62,6 +63,11 @@ def user(request, action):
 
 def manage(request):
     context = {}
+    if "email" not in request.session:
+        return redirect("/")
+    current_user = models.User.objects.get(email=request.session["email"])
+    if not current_user.is_staff:
+        return redirect("/")
     return render(request, 'manage.html', context)
 
 def about(request):
@@ -71,6 +77,6 @@ def about(request):
 
 def index(request):
     context = {}
-    if "user_login" in request.session and request.session["user_login"]:
+    if "email" in request.session:
         context["user_login"] = request.session["email"]
     return render(request, 'index.html', context)
