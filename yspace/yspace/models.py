@@ -17,7 +17,7 @@ class User(models.Model):
     )
     career = models.CharField(max_length=64)
     biography = models.CharField(max_length=256)
-    picture = models.CharField(max_length=256)
+    picture = models.ImageField()
     register_date = models.DateField(auto_now_add=True)
     is_staff = models.BooleanField(default=False)
 
@@ -30,10 +30,10 @@ class Event(models.Model):
     sub_title = models.CharField(max_length=128)
     short_description = models.CharField(max_length=128)
     description = models.CharField(max_length=256)
-    picture = models.CharField(max_length=256)
+    picture = models.ImageField()
     content = models.TextField()
     start_time = models.DateTimeField()
-    duration = models.DurationField()
+    end_time = models.DateTimeField()
 
     EVENT_STATUS_CHOICES = (
         ('OP', 'Open for Registration'),
