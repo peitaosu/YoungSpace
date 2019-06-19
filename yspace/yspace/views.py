@@ -70,7 +70,8 @@ def user(request, action):
     elif action == "/logout":
         request.session.flush()
     else:
-        pass
+        context["profile"] = models.User.objects.get(email=request.session["email"])
+        return render(request, 'profile.html', context)
     return redirect("/")
 
 def manage(request):

@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div>
+	<div class="col-md-12">
+		<h2 class="title">User Profile</h2>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="control-label">Name</label>
+					<input type="text" class="form-control" placeholder="{{ profile.name }}">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="control-label">Email</label>
+					<input type="text" class="form-control"  placeholder="{{ profile.email }}">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

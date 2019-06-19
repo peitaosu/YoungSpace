@@ -4,8 +4,8 @@ from django.db import models
 class User(models.Model):
     password = models.CharField(max_length=256)
     email = models.EmailField(unique=True)
-    name = models.CharField(max_length=64)
-    age = models.IntegerField()
+    name = models.CharField(max_length=64, blank=True)
+    age = models.IntegerField(null=True)
     USER_GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
@@ -15,9 +15,9 @@ class User(models.Model):
         choices=USER_GENDER_CHOICES,
         default='M',
     )
-    career = models.CharField(max_length=64)
-    biography = models.TextField()
-    picture = models.ImageField()
+    career = models.CharField(max_length=64, blank=True)
+    biography = models.TextField(blank=True)
+    picture = models.ImageField(null=True)
     register_date = models.DateField(auto_now_add=True)
     is_staff = models.BooleanField(default=False)
 
