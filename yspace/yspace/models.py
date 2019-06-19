@@ -60,21 +60,21 @@ class Event_Keyword(models.Model):
     keyword = models.ForeignKey("Keyword", on_delete=Keyword)
 
     def __str__(self):
-        return "Event: {} Keyword: {}".format(event, keyword)
+        return "Event: {} Keyword: {}".format(self.event, self.keyword)
 
 class User_Keyword(models.Model):
     user = models.ForeignKey("User", on_delete=User)
     keyword = models.ForeignKey("Keyword", on_delete=Keyword)
 
     def __str__(self):
-        return "User: {} Keyword: {}".format(user, keyword)
+        return "User: {} Keyword: {}".format(self.user, self.keyword)
 
 class User_Event(models.Model):
     user = models.ForeignKey("User", on_delete=User)
     event = models.ForeignKey("Event", on_delete=Event)
 
     def __str__(self):
-        return "User: {} Event: {}".format(user, event)
+        return "User: {} Event: {}".format(self.user, self.event)
 
 class About(models.Model):
     point = models.CharField(max_length=40)
