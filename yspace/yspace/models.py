@@ -16,7 +16,7 @@ class User(models.Model):
         default='M',
     )
     career = models.CharField(max_length=64)
-    biography = models.CharField(max_length=256)
+    biography = models.TextField()
     picture = models.ImageField()
     register_date = models.DateField(auto_now_add=True)
     is_staff = models.BooleanField(default=False)
@@ -29,7 +29,7 @@ class Event(models.Model):
     title = models.CharField(max_length=64)
     sub_title = models.CharField(max_length=128)
     short_description = models.CharField(max_length=128)
-    description = models.CharField(max_length=256)
+    description = models.TextField()
     picture = models.ImageField()
     content = models.TextField()
     start_time = models.DateTimeField()
@@ -50,7 +50,7 @@ class Event(models.Model):
 
 class Keyword(models.Model):
     keyword = models.CharField(max_length=64, unique=True)
-    description = models.CharField(max_length=256)
+    description = models.TextField()
 
     def __str__(self):
         return self.keyword
@@ -80,7 +80,7 @@ class About(models.Model):
     point = models.CharField(max_length=40)
     time = models.CharField(max_length=40)
     title = models.CharField(max_length=40)
-    context = models.CharField(max_length=256)
+    context = models.TextField()
 
     def __str__(self):
         return self.title
