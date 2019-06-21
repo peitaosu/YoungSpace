@@ -79,6 +79,7 @@ def user(request, action):
         new_user.save()
         request.session["email"] = new_user.email
         request.session["user_login"] = True
+        return redirect("/user")
     elif action == "/login":
         user = models.User.objects.get(email=request.POST["email"])
         if user.password == hash_code(request.POST["password"]):
