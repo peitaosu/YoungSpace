@@ -16,14 +16,16 @@ def hash_code(source):
     hash.update(source.encode())
     return hash.hexdigest()
 
-def redirect_if_not_login(request):
+def if_not_login(request):
     if "email" not in request.session:
-        return redirect("/")
+        return True
+    return False
 
-def redirect_if_not_staff(request):
+def if_not_staff(request):
     current_user = models.User.objects.get(email=request.session["email"])
     if not current_user.is_staff:
-        return redirect("/")
+        return True
+    return False
 
 def show_login_user(request, context):
     if "email" in request.session:
@@ -31,12 +33,15 @@ def show_login_user(request, context):
     return context
 
 def event(request, action):
+    if settings.MAINTENANCE_MODE:
+        return redirect("/")
     context = {
         "registered": [],
         "all": [],
         "detail": None
     }
-    redirect_if_not_login(request)
+    if if_not_login(request):
+        return redirect("/")
     context = show_login_user(request, context)
     current_user = models.User.objects.get(email=request.session["email"])
     if action == "/detail":
@@ -54,7 +59,8 @@ def event(request, action):
         user_event.delete()
         return redirect("/event/my")
     elif action == "/add":
-        redirect_if_not_staff(request)
+        if if_not_staff(request):
+            return redirect("/")
         new_event = models.Event(eid=(models.Event.objects.all().last().eid + 1), title=request.POST["title"], description=request.POST["description"], picture=request.POST["picture"])
         new_event.save()
         return redirect("/event/all")
@@ -71,8 +77,11 @@ def event(request, action):
             return redirect("/event/all")
 
 def user(request, action):
+    if settings.MAINTENANCE_MODE:
+        return redirect("/")
     context = {}
-    redirect_if_not_login(request)
+    if if_not_login(request):
+        return redirect("/")
     context = show_login_user(request, context)
     if action == "/register":
         new_user = models.User(email=request.POST["email"], password=hash_code(request.POST["password"]))
@@ -93,19 +102,26 @@ def user(request, action):
     return redirect("/")
 
 def manage(request):
+    if settings.MAINTENANCE_MODE:
+        return redirect("/")
     context = {}
-    redirect_if_not_login(request)
+    if if_not_login(request):
+        return redirect("/")
     context = show_login_user(request, context)
     current_user = models.User.objects.get(email=request.session["email"])
-    redirect_if_not_staff(request)
+    if if_not_staff(request):
+        return redirect("/")
     return render(request, 'manage.html', context)
 
 def about(request):
+    if settings.MAINTENANCE_MODE:
+        return redirect("/")
     context = {}
     context["events"] = models.About.objects.all()
     return render(request, 'about.html', context)
 
 def index(request):
     context = {}
+    context["MAINTENANCE_MODE"] = settings.MAINTENANCE_MODE
     context = show_login_user(request, context)
     return render(request, 'index.html', context)
