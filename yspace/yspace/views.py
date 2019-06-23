@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.conf import settings
 from django.shortcuts import redirect
+from django.contrib import messages
 import os
 import sys
 import subprocess
@@ -84,12 +85,18 @@ def user(request, action):
         return redirect("/")
     context = show_login_user(request, context)
     if action == "/register":
+        if models.User.objects.filter(email=request.POST["email"]).count() > 0:
+            messages.info(request, "You email address was already registered, please check again.")
+            return redirect("/")
         new_user = models.User(email=request.POST["email"], password=hash_code(request.POST["password"]))
         new_user.save()
         request.session["email"] = new_user.email
         request.session["user_login"] = True
         return redirect("/user")
     elif action == "/login":
+        if models.User.objects.filter(email=request.POST["email"]).count() == 0:
+            messages.info(request, "You email was not registered, please check again or register this email.")
+            return redirect("/")
         user = models.User.objects.get(email=request.POST["email"])
         if user.password == hash_code(request.POST["password"]):
             request.session["email"] = user.email
@@ -110,6 +117,7 @@ def manage(request):
     context = show_login_user(request, context)
     current_user = models.User.objects.get(email=request.session["email"])
     if if_not_staff(request):
+        messages.info(request, "You are not staff, you can not access this page.")
         return redirect("/")
     return render(request, 'manage.html', context)
 
