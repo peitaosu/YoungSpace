@@ -4,7 +4,7 @@
 <div>
 	<div class="col-md-12">
 		<h2 class="title">User Profile</h2>
-		<form method="post">
+		<form method="post" name="profile">
 			<div class="col-md-8">
 				<div class="row">
 					<div class="col-md-6">
@@ -54,7 +54,7 @@
 					<div class="col-md-12">
 						<div class="form-group">
 							<label class="control-label">Biography</label>
-							<textarea class="form-control" rows="3">{{ profile.biography }}</textarea>
+							<textarea class="form-control" name="biography" rows="3">{{ profile.biography }}</textarea>
 						</div>
 					</div>
 				</div>
@@ -63,7 +63,7 @@
 						<div class="form-group">
 							<label class="control-label">Picture</label>
 							<div class="input-group form-search">
-								<input class="form-control" id="file_upload" name="picture_file" type="file" />
+								<input class="form-control" id="file_upload" name="picture" type="file" />
 								<span class="input-group-btn">
 									<button type="submit" class="btn btn-primary" id="upload">Upload</button>
 								</span>
@@ -75,10 +75,10 @@
 					<div class="col-md-12">
 						<div class="row">
 							<div class="col-md-6">
-								<button type="button" class="btn btn-block">Cancel</button>
+								<button type="button" class="btn btn-block" formaction="/">Cancel</button>
 							</div>
 							<div class="col-md-6">
-								<button type="button" class="btn btn-primary btn-block">Save</button>
+								<button type="button" class="btn btn-primary btn-block" formaction="/user/update">Save</button>
 							</div>
 						</div>
 					</div>

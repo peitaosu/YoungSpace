@@ -93,6 +93,14 @@ def user(request, action):
         request.session["email"] = new_user.email
         request.session["user_login"] = True
         return redirect("/user")
+    elif action == "/update":
+        user = models.User.objects.get(email=request.POST["email"])
+        user.name = request.POST["name"]
+        user.gender = request.POST["gender"]
+        user.career = request.POST["career"]
+        user.biography = request.POST["biography"]
+        user.picture = request.POST["picture"]
+        user.save()
     elif action == "/login":
         if models.User.objects.filter(email=request.POST["email"]).count() == 0:
             messages.info(request, "You email was not registered, please check again or register this email.")
