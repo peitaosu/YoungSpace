@@ -96,10 +96,12 @@ def user(request, action):
     elif action == "/update":
         user = models.User.objects.get(email=request.POST["email"])
         user.name = request.POST["name"]
-        user.gender = request.POST["gender"]
+        if request.POST["gender"] != "N":
+            user.gender = request.POST["gender"]
         user.career = request.POST["career"]
         user.biography = request.POST["biography"]
-        user.picture = request.POST["picture"]
+        if request.POST["picture"] != "":
+            user.picture = request.POST["picture"]
         user.save()
     elif action == "/login":
         if models.User.objects.filter(email=request.POST["email"]).count() == 0:
