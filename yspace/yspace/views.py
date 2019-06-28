@@ -30,7 +30,11 @@ def if_not_staff(request):
 
 def show_login_user(request, context):
     if "email" in request.session:
-        context["user_login"] = request.session["email"]
+        current_user = models.User.objects.get(email=request.session["email"])
+        if current_user.name != "":
+            context["user_login"] = current_user.name
+        else:
+            context["user_login"] = request.session["email"]
     return context
 
 def event(request, action):
