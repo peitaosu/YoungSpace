@@ -87,8 +87,11 @@ def user(request, action):
     if action == "/register":
         print("register")
         if models.User.objects.filter(email=request.POST["email"]).count() > 0:
+            context = {
+                "alertmessage": "You email address was already registered, please check again."
+            }
             messages.info(request, "You email address was already registered, please check again.")
-            return redirect("/")
+            return render(request, 'alert-danger.html', context)
         new_user = models.User(email=request.POST["email"], password=hash_code(request.POST["password"]))
         new_user.save()
         request.session["email"] = new_user.email
@@ -108,8 +111,10 @@ def user(request, action):
         user.save()
     elif action == "/login":
         if models.User.objects.filter(email=request.POST["email"]).count() == 0:
-            messages.info(request, "You email was not registered, please check again or register this email.")
-            return redirect("/")
+            context = {
+                "alertmessage": "You email was not registered, please check again or register this email."
+            }
+            return render(request, 'alert-danger.html', context)
         user = models.User.objects.get(email=request.POST["email"])
         if user.password == hash_code(request.POST["password"]):
             request.session["email"] = user.email
@@ -131,8 +136,10 @@ def manage(request):
     context = show_login_user(request, context)
     current_user = models.User.objects.get(email=request.session["email"])
     if if_not_staff(request):
-        messages.info(request, "You are not staff, you can not access this page.")
-        return redirect("/")
+        context = {
+                "alertmessage": "You are not staff, you can not access this page."
+            }
+        return render(request, 'alert-danger.html', context)
     return render(request, 'manage.html', context)
 
 def about(request):
