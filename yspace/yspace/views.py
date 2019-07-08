@@ -84,11 +84,8 @@ def event(request, action):
 def user(request, action):
     if settings.MAINTENANCE_MODE:
         return redirect("/")
-    context = {}
-    if if_not_login(request):
-        return redirect("/")
-    context = show_login_user(request, context)
     if action == "/register":
+        print("register")
         if models.User.objects.filter(email=request.POST["email"]).count() > 0:
             messages.info(request, "You email address was already registered, please check again.")
             return redirect("/")
@@ -97,7 +94,9 @@ def user(request, action):
         request.session["email"] = new_user.email
         request.session["user_login"] = True
         return redirect("/user")
-    elif action == "/update":
+    elif action == "/update":  
+        if if_not_login(request):
+            return redirect("/")
         user = models.User.objects.get(email=request.POST["email"])
         user.name = request.POST["name"]
         if request.POST["gender"] != "N":
@@ -118,6 +117,7 @@ def user(request, action):
     elif action == "/logout":
         request.session.flush()
     else:
+        context = show_login_user(request, {})
         context["profile"] = models.User.objects.get(email=request.session["email"])
         return render(request, 'profile.html', context)
     return redirect("/")
