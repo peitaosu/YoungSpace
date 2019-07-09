@@ -102,13 +102,13 @@ def user(request, action):
     elif action == "/update":  
         if if_not_login(request):
             return redirect("/")
-        user = models.User.objects.get(email=request.POST["email"])
+        user = models.User.objects.get(email=request.session["email"])
         user.name = request.POST["name"]
-        if request.POST["gender"] != "N":
+        if "gender" in request.POST and request.POST["gender"] != "N":
             user.gender = request.POST["gender"]
         user.career = request.POST["career"]
         user.biography = request.POST["biography"]
-        if request.POST["picture"] != "":
+        if "picture" in request.POST and request.POST["picture"] != "":
             user.picture = request.POST["picture"]
         user.save()
     elif action == "/login":
