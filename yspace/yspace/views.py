@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.conf import settings
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.core.files.storage import FileSystemStorage
 import os
 import sys
 import subprocess
@@ -110,8 +111,14 @@ def user(request, action):
             user.age = request.POST["age"]
         user.career = request.POST["career"]
         user.biography = request.POST["biography"]
-        if "picture" in request.POST and request.POST["picture"] != "":
-            user.picture = request.POST["picture"]
+        print(request.POST)
+        print(request.FILES)
+        if "picture" in request.FILES:
+            file_upload = request.FILES['picture']
+            fs = FileSystemStorage()
+            file_name = fs.save(file_upload.name, file_upload)
+            file_url = fs.url(file_name)
+            user.picture = file_url
         user.save()
     elif action == "/login":
         if models.User.objects.filter(email=request.POST["email"]).count() == 0:
