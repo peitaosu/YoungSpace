@@ -106,6 +106,8 @@ def user(request, action):
         user.name = request.POST["name"]
         if "gender" in request.POST and request.POST["gender"] != "N":
             user.gender = request.POST["gender"]
+        if "age" in request.POST and request.POST["age"] != "":
+            user.age = request.POST["age"]
         user.career = request.POST["career"]
         user.biography = request.POST["biography"]
         if "picture" in request.POST and request.POST["picture"] != "":
