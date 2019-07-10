@@ -86,7 +86,6 @@ def user(request, action):
     if settings.MAINTENANCE_MODE:
         return redirect("/")
     if action == "/register":
-        print("register")
         if models.User.objects.filter(email=request.POST["email"]).count() > 0:
             context = {
                 "has_alert": True,
@@ -111,8 +110,6 @@ def user(request, action):
             user.age = request.POST["age"]
         user.career = request.POST["career"]
         user.biography = request.POST["biography"]
-        print(request.POST)
-        print(request.FILES)
         if "picture" in request.FILES:
             file_upload = request.FILES['picture']
             fs = FileSystemStorage()
