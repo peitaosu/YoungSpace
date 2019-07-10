@@ -158,6 +158,7 @@ def about(request):
     if settings.MAINTENANCE_MODE:
         return redirect("/")
     context = {}
+    context = show_login_user(request, context)
     context["events"] = models.About.objects.all()
     return render(request, 'about.html', context)
 
