@@ -146,11 +146,11 @@ def manage(request):
     context = show_login_user(request, context)
     current_user = models.User.objects.get(email=request.session["email"])
     if if_not_staff(request):
-        context = {
+        context.update({
                 "has_alert": True,
                 "alertclass": "alert-danger",
                 "alertmessage": "You are not staff, you can not access this page."
-            }
+            })
         return render(request, 'index.html', context)
     return render(request, 'manage.html', context)
 
