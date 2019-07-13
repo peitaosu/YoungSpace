@@ -137,23 +137,6 @@ def user(request, action):
         return render(request, 'profile.html', context)
     return redirect("/")
 
-def manage(request):
-    if settings.MAINTENANCE_MODE:
-        return redirect("/")
-    context = {}
-    if if_not_login(request):
-        return redirect("/")
-    context = show_login_user(request, context)
-    current_user = models.User.objects.get(email=request.session["email"])
-    if if_not_staff(request):
-        context.update({
-                "has_alert": True,
-                "alertclass": "alert-danger",
-                "alertmessage": "You are not staff, you can not access this page."
-            })
-        return render(request, 'index.html', context)
-    return render(request, 'manage.html', context)
-
 def about(request):
     if settings.MAINTENANCE_MODE:
         return redirect("/")
