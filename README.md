@@ -1,7 +1,7 @@
 Young Space
 ============
 
-Events and attendees system.
+This is a events and attendees system.
 
 
 ## How To Setup
@@ -19,4 +19,11 @@ python yspace/manage.py createsuperuser
 3. Run Server
 ```
 python yspace/manage.py runserver <IP>:<Port>
+```
+
+4. Manage Users and Events
+```
+1. go to <IP>:<Port>/admin
+2. login with your super user
+3. update related table
 ```
