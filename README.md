@@ -27,3 +27,13 @@ python yspace/manage.py runserver <IP>:<Port>
 2. login with your super user
 3. update related table
 ```
+
+## Tables
+
+* Users
+* Events
+* Keywords
+* User_events
+* User_keywords
+* Event_keywords
+* About
