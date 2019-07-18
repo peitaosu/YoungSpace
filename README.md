@@ -37,3 +37,14 @@ python yspace/manage.py runserver <IP>:<Port>
 * User_keywords
 * Event_keywords
 * About
+
+## Settings.py
+```
+# media root and url for media upload
+MEDIA_ROOT = BASE_DIR + '/media/'
+
+MEDIA_URL = '/media/'
+
+# set MAINTENANCE_MODE=True when in maintenance
+MAINTENANCE_MODE=False
+```
