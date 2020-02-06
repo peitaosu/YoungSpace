@@ -14,22 +14,30 @@ from sqlite3 import OperationalError
 from . import models
 
 def hash_code(source):
+    """get hash
+    """
     hash = hashlib.sha256()
     hash.update(source.encode())
     return hash.hexdigest()
 
 def if_not_login(request):
+    """check login or not
+    """
     if "email" not in request.session:
         return True
     return False
 
 def if_not_staff(request):
+    """check if staff or not
+    """
     current_user = models.User.objects.get(email=request.session["email"])
     if not current_user.is_staff:
         return True
     return False
 
 def show_login_user(request, context):
+    """show login user in navbar
+    """
     if "email" in request.session:
         current_user = models.User.objects.get(email=request.session["email"])
         if current_user.name != "":
@@ -39,6 +47,8 @@ def show_login_user(request, context):
     return context
 
 def event(request, action):
+    """for events
+    """
     if settings.MAINTENANCE_MODE:
         return redirect("/")
     context = {
@@ -83,6 +93,8 @@ def event(request, action):
             return redirect("/event/all")
 
 def user(request, action):
+    """for users
+    """
     if settings.MAINTENANCE_MODE:
         return redirect("/")
     if action == "/register":
@@ -138,6 +150,8 @@ def user(request, action):
     return redirect("/")
 
 def about(request):
+    """show about page
+    """
     if settings.MAINTENANCE_MODE:
         return redirect("/")
     context = {}
@@ -146,6 +160,8 @@ def about(request):
     return render(request, 'about.html', context)
 
 def index(request):
+    """show index
+    """
     context = {}
     context["MAINTENANCE_MODE"] = settings.MAINTENANCE_MODE
     context = show_login_user(request, context)
